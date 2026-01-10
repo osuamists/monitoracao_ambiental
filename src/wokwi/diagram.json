@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "author": "Sistema de Monitoramento Ambiental",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 100,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_temp",
+      "top": -120,
+      "left": -50,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_set",
+      "top": -120,
+      "left": 80,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr",
+      "top": -120,
+      "left": 350,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn",
+      "top": 220,
+      "left": -50,
+      "attrs": { "color": "blue" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 220,
+      "left": 320,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": 220,
+      "left": 370,
+      "attrs": { "color": "yellow" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": 220,
+      "left": 420,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 180,
+      "left": 310,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 180,
+      "left": 360,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 180,
+      "left": 410,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz",
+      "top": 300,
+      "left": 320,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "rl",
+      "top": -50,
+      "left": 450,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+    
+    ["pot_temp:VCC", "esp:3V3", "red", ["v0"]],
+    ["pot_temp:GND", "esp:GND.1", "black", ["v0"]],
+    ["pot_temp:SIG", "esp:34", "green", ["v0"]],
+    
+    ["pot_set:VCC", "esp:3V3", "red", ["v0"]],
+    ["pot_set:GND", "esp:GND.1", "black", ["v0"]],
+    ["pot_set:SIG", "esp:32", "blue", ["v0"]],
+    
+    ["ldr:VCC", "esp:3V3", "red", ["v0"]],
+    ["ldr:GND", "esp:GND.2", "black", ["v0"]],
+    ["ldr:AO", "esp:35", "orange", ["v0"]],
+    
+    ["btn:1.l", "esp:13", "purple", ["v0"]],
+    ["btn:2.l", "esp:GND.1", "black", ["v0"]],
+    
+    ["esp:27", "r1:1", "green", ["v0"]],
+    ["r1:2", "led1:A", "green", ["v0"]],
+    ["led1:C", "esp:GND.2", "black", ["v0"]],
+    
+    ["esp:14", "r2:1", "yellow", ["v0"]],
+    ["r2:2", "led2:A", "yellow", ["v0"]],
+    ["led2:C", "esp:GND.2", "black", ["v0"]],
+    
+    ["esp:12", "r3:1", "red", ["v0"]],
+    ["r3:2", "led3:A", "red", ["v0"]],
+    ["led3:C", "esp:GND.2", "black", ["v0"]],
+    
+    ["esp:26", "bz:1", "orange", ["v0"]],
+    ["bz:2", "esp:GND.2", "black", ["v0"]],
+    
+    ["esp:25", "rl:IN", "cyan", ["v0"]],
+    ["rl:VCC", "esp:VIN", "red", ["v0"]],
+    ["rl:GND", "esp:GND.2", "black", ["v0"]]
+  ]
+}
