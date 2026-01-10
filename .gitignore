@@ -1,0 +1,37 @@
+# Arquivos temporários
+*.tmp
+*.log
+*.bak
+*~
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Arquivos do Windows
+desktop.ini
+
+# Arquivos do Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Backups
+*.backup
+*.old
+
+# Arquivos grandes
+*.mp4
+*.avi
+*.mov
