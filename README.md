@@ -25,18 +25,25 @@ Sistema inteligente de monitoramento e controle ambiental desenvolvido para a di
 ## 🔧 Componentes de Hardware
 
 ### Sensores
-- **LM35:** Sensor de temperatura (-55°C a 150°C)
-- **LDR:** Fotoresistor (luminosidade)
-- **Potenciômetro:** Ajuste de setpoint (20-60°C)
+| Componente | GPIO | Descrição |
+|------------|------|-----------|
+| Potenciômetro (LM35) | 34 | Simula sensor de temperatura (0-50°C) |
+| Potenciômetro (Setpoint) | 32 | Ajuste do setpoint (20-60°C) |
+| LDR (Fotoresistor) | 35 | Sensor de luminosidade |
 
 ### Atuadores
-- **Relé 5V:** Controle de carga (simulação de ar-condicionado)
-- **Buzzer:** Alarme sonoro
-- **LEDs RGB:** Indicadores visuais (verde/amarelo/vermelho)
-- **LCD 16x2 I2C:** Display de informações
+| Componente | GPIO | Descrição |
+|------------|------|-----------|
+| Relé 5V | 25 | Controle de carga (ar-condicionado) |
+| Buzzer | 26 | Alarme sonoro (PWM) |
+| LED Verde | 27 | Indicador: Normal |
+| LED Amarelo | 14 | Indicador: Atenção |
+| LED Vermelho | 12 | Indicador: Crítico |
 
 ### Controle
-- **Push Button:** Alternância modo manual/automático
+| Componente | GPIO | Descrição |
+|------------|------|-----------|
+| Push Button | 13 | Alternância modo Manual/Automático (PULL_UP) |
 
 ---
 
@@ -53,27 +60,50 @@ Sistema inteligente de monitoramento e controle ambiental desenvolvido para a di
 |--------|-----|--------|----------|
 | 🟢 Normal | Verde | Desligado | temp ≤ setpoint |
 | 🟡 Atenção | Amarelo | Desligado | temp > setpoint |
-| 🔴 Crítico | Vermelho | Ativado | temp > setpoint + 5°C |
+| 🔴 Crítico | Vermelho | Beep | temp > setpoint + 5°C |
 
 ### Modo Manual
-- Pressionar botão desliga relé (segurança)
+- Pressionar botão desliga relé e trava (segurança)
 - Sistema mantém monitoramento de sensores
 - Pressionar novamente retorna ao automático
 
 ---
 
+## 📁 Estrutura do Projeto
+
+```
+monitoracao_ambiental/
+├── README.md
+├── LICENSE
+├── assets/              # Imagens e recursos
+├── docs/                # Documentação
+│   ├── relatorio.md
+│   ├── apresentacao.md
+│   └── referencias.md
+└── src/
+    └── wokwi/
+        ├── diagram.json  # Diagrama do circuito
+        └── main.py       # Código MicroPython
+```
+
+---
+
 ## 🚀 Como Simular no Wokwi
 
-### Opção 1: Link Direto
-🔗 **[Abrir projeto no Wokwi](https://wokwi.com/projects/XXXXXXX)** *(atualizar após upload)*
-
-### Opção 2: Importar Manualmente
+### Opção 1: Importar Manualmente
 1. Acesse [Wokwi.com](https://wokwi.com)
-2. New Project → ESP32 → MicroPython
+2. Crie novo projeto: **New Project → ESP32 → MicroPython**
 3. Copie os arquivos de `src/wokwi/`:
    - `diagram.json` → Aba "diagram.json"
    - `main.py` → Aba "main.py"
-4. Start Simulation ▶️
+4. Clique em **Start Simulation ▶️**
+
+### Instruções de Uso
+1. 🌡️ **Gire o potenciômetro esquerdo** para simular temperatura (0-50°C)
+2. 🎯 **Gire o potenciômetro direito** para ajustar setpoint (20-60°C)
+3. 💡 **Clique no LDR** para ajustar luminosidade
+4. 🔘 **Pressione o botão azul** para alternar MANUAL/AUTO
+5. 👀 **Observe os LEDs**: Verde=OK, Amarelo=Atenção, Vermelho=Crítico
 
 ---
 
@@ -85,28 +115,10 @@ Sistema inteligente de monitoramento e controle ambiental desenvolvido para a di
 
 ---
 
-## 👥 Equipe
-
-- **[SEU NOME]** - Desenvolvimento de hardware e código
-- **Kevin** - Documentação e testes
-
-**Disciplina:** Sistemas Embarcados  
-**Instituição:** [Nome da Universidade]  
-**Data:** 12 de Janeiro de 2026
-
----
 
 ## 📜 Licença
 
 Este projeto está sob a licença MIT - veja [LICENSE](LICENSE) para detalhes.
-
----
-
-## 🙏 Agradecimentos
-
-- Prof. [Nome do Professor] - Orientação técnica
-- Wokwi - Plataforma de simulação
-- Comunidade MicroPython
 
 ---
 
