@@ -138,7 +138,7 @@ def control_relay(temperature, setpoint, manual_mode):
                 led_vent.on()
                 print("Rele LIGADO - Temp {:.1f}C > Setpoint {}C".format(temperature, setpoint))
         else:
-            if relay.value():
+            if relay.value() and temperature <= setpoint - 2:
                 relay.off()
                 led_vent.off()
                 print("Rele DESLIGADO - Temp {:.1f}C <= Setpoint {}C".format(temperature, setpoint))
