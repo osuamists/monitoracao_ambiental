@@ -15,6 +15,7 @@ BUTTON_PIN = 13
 LED_VERDE_PIN = 27
 LED_AMARELO_PIN = 14
 LED_VERMELHO_PIN = 12
+LED_VENT_PIN = 4
 BUZZER_PIN = 26
 
 # Sensores
@@ -40,6 +41,9 @@ led_vermelho = Pin(LED_VERMELHO_PIN, Pin.OUT)
 led_verde.off()
 led_amarelo.off()
 led_vermelho.off()
+
+led_vent = Pin(LED_VENT_PIN, Pin.OUT)
+led_vent.off()
 
 buzzer = PWM(Pin(BUZZER_PIN))
 buzzer.freq(1000)
@@ -125,15 +129,18 @@ def control_relay(temperature, setpoint, manual_mode):
     if manual_mode:
         if relay.value():
             relay.off()
+            led_vent.off()
             print("Rele DESLIGADO - Modo Manual")
     else:
         if temperature > setpoint:
             if not relay.value():
                 relay.on()
+                led_vent.on()
                 print("Rele LIGADO - Temp {:.1f}C > Setpoint {}C".format(temperature, setpoint))
         else:
             if relay.value():
                 relay.off()
+                led_vent.off()
                 print("Rele DESLIGADO - Temp {:.1f}C <= Setpoint {}C".format(temperature, setpoint))
 
 
@@ -202,5 +209,6 @@ except KeyboardInterrupt:
     led_verde.off()
     led_amarelo.off()
     led_vermelho.off()
+    led_vent.off()
     buzzer.duty(0)
     print("\nSistema finalizado. {} leituras realizadas.".format(contador))

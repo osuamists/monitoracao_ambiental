@@ -103,7 +103,7 @@
       "id": "rl",
       "top": -50,
       "left": 450,
-      "attrs": {}
+      "attrs": { "activeLow": "false" }
     },
     {
       "type": "wokwi-led",
@@ -161,9 +161,8 @@
     ["rl:VCC", "esp:VIN", "red", ["v0"]],
     ["rl:GND", "esp:GND.2", "black", ["v0"]],
     
-    ["rl:NO", "r_vent:1", "orange", ["v0"]],
+["esp:4", "r_vent:1", "cyan", ["v0"]],
     ["r_vent:2", "led_vent:A", "cyan", ["v0"]],
-    ["led_vent:C", "esp:GND.2", "black", ["v0"]],
-    ["rl:COM", "esp:VIN", "red", ["v0"]]
+    ["led_vent:C", "esp:GND.2", "black", ["v0"]]
   ]
 }

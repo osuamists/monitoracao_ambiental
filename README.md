@@ -1,12 +1,12 @@
-# 🌡️ Sistema de Monitoramento Ambiental - Seminário 3
+# Sistema de Monitoramento Ambiental - Seminário 3
 
-[![Wokwi](https://img.shields.io/badge/Simula%C3%A7%C3%A3o-Wokwi-green)](https://wokwi.com)
+[![Wokwi](https://img.shields.io/badge/Simulação-Wokwi-green)](https://wokwi.com)
 [![ESP32](https://img.shields.io/badge/Hardware-ESP32-blue)](https://www.espressif.com/en/products/socs/esp32)
 [![MicroPython](https://img.shields.io/badge/Linguagem-MicroPython-yellow)](https://micropython.org/)
 
-## 📌 Sobre o Projeto
+## Sobre o Projeto
 
-Sistema inteligente de monitoramento e controle ambiental desenvolvido para a disciplina de **Sistemas Embarcados** (Janeiro/2026).
+Sistema de monitoramento e controle ambiental desenvolvido para a disciplina de **Sistemas Embarcados**.
 
 **Evolução do Seminário 2:**
 - **S2:** Arduino Uno + C/C++ (hardware físico)
@@ -14,112 +14,97 @@ Sistema inteligente de monitoramento e controle ambiental desenvolvido para a di
 
 ---
 
-## 🎯 Objetivos do Seminário 3
+## Objetivos
 
-1. ✅ Demonstrar **arquiteturas complementares** (Arduino vs ESP32)
-2. ✅ Explorar **linguagens alternativas** (C++ vs MicroPython)
-3. ✅ Utilizar **simuladores online** (Wokwi)
+1. Demonstrar arquiteturas complementares (Arduino vs ESP32)
+2. Explorar linguagens alternativas (C++ vs MicroPython)
+3. Utilizar simuladores online (Wokwi)
 
 ---
 
-## 🔧 Componentes de Hardware
+## Componentes de Hardware
 
 ### Sensores
 | Componente | GPIO | Descrição |
 |------------|------|-----------|
-| Potenciômetro (LM35) | 34 | Simula sensor de temperatura (0-50°C) |
-| Potenciômetro (Setpoint) | 32 | Ajuste do setpoint (20-60°C) |
-| LDR (Fotoresistor) | 35 | Sensor de luminosidade |
+| DHT22 | 15 | Sensor de temperatura e umidade |
+| Potenciômetro | 32 | Ajuste do setpoint (20-60°C) |
+| LDR | 35 | Sensor de luminosidade |
 
 ### Atuadores
 | Componente | GPIO | Descrição |
 |------------|------|-----------|
-| Relé 5V | 25 | Controle de carga (ar-condicionado) |
+| Relé 5V | 25 | Controle de ventilação |
 | Buzzer | 26 | Alarme sonoro (PWM) |
 | LED Verde | 27 | Indicador: Normal |
 | LED Amarelo | 14 | Indicador: Atenção |
 | LED Vermelho | 12 | Indicador: Crítico |
+| LED Azul | - | Indicador de ventilação (via relé NO) |
 
 ### Controle
 | Componente | GPIO | Descrição |
 |------------|------|-----------|
-| Push Button | 13 | Alternância modo Manual/Automático (PULL_UP) |
+| Push Button | 13 | Alternância Manual/Automático (pull-down externo 10kΩ) |
 
 ---
 
-## 📊 Funcionalidades
+## Funcionalidades
 
 ### Modo Automático
-- Lê temperatura e luminosidade a cada 3 segundos
+- Lê temperatura e umidade do DHT22 a cada 3 segundos
 - Compara temperatura com setpoint ajustável
-- **Relé LIGA** quando temperatura > setpoint (refrigeração)
+- **Relé LIGA** quando temperatura > setpoint (ventilação)
 - **Relé DESLIGA** quando temperatura ≤ setpoint
+- LED azul indica quando ventilação está ativa
 
 ### Indicadores Visuais
 | Status | LED | Buzzer | Condição |
 |--------|-----|--------|----------|
-| 🟢 Normal | Verde | Desligado | temp ≤ setpoint |
-| 🟡 Atenção | Amarelo | Desligado | temp > setpoint |
-| 🔴 Crítico | Vermelho | Beep | temp > setpoint + 5°C |
+| Normal | Verde | Desligado | temp ≤ setpoint |
+| Atenção | Amarelo | Desligado | temp > setpoint |
+| Crítico | Vermelho | Beep | temp > setpoint + 5°C |
 
 ### Modo Manual
-- Pressionar botão desliga relé e trava (segurança)
+- Pressionar botão desliga relé e trava
 - Sistema mantém monitoramento de sensores
 - Pressionar novamente retorna ao automático
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 monitoracao_ambiental/
 ├── README.md
 ├── LICENSE
-├── assets/              # Imagens e recursos
-├── docs/                # Documentação
-│   ├── relatorio.md
-│   ├── apresentacao.md
-│   └── referencias.md
+├── assets/
+├── docs/
 └── src/
     └── wokwi/
-        ├── diagram.json  # Diagrama do circuito
+        ├── diagram.json  # Circuito Wokwi
         └── main.py       # Código MicroPython
 ```
 
 ---
 
-## 🚀 Como Simular no Wokwi
+## Como Simular no Wokwi
 
-### Opção 1: Importar Manualmente
 1. Acesse [Wokwi.com](https://wokwi.com)
 2. Crie novo projeto: **New Project → ESP32 → MicroPython**
 3. Copie os arquivos de `src/wokwi/`:
    - `diagram.json` → Aba "diagram.json"
    - `main.py` → Aba "main.py"
-4. Clique em **Start Simulation ▶️**
+4. Clique em **Start Simulation**
 
 ### Instruções de Uso
-1. 🌡️ **Gire o potenciômetro esquerdo** para simular temperatura (0-50°C)
-2. 🎯 **Gire o potenciômetro direito** para ajustar setpoint (20-60°C)
-3. 💡 **Clique no LDR** para ajustar luminosidade
-4. 🔘 **Pressione o botão azul** para alternar MANUAL/AUTO
-5. 👀 **Observe os LEDs**: Verde=OK, Amarelo=Atenção, Vermelho=Crítico
+1. O DHT22 tem temperatura inicial de 24°C (clique para ajustar)
+2. Gire o potenciômetro para ajustar setpoint (20-60°C)
+3. Clique no LDR para ajustar luminosidade
+4. Pressione o botão para alternar MANUAL/AUTO
+5. Observe os LEDs e o LED azul (ventilação)
 
 ---
 
-## 📖 Documentação
-
-- [Relatório Completo](docs/relatorio.md)
-- [Roteiro da Apresentação](docs/apresentacao.md)
-- [Referências Bibliográficas](docs/referencias.md)
-
----
-
-
-## 📜 Licença
+## Licença
 
 Este projeto está sob a licença MIT - veja [LICENSE](LICENSE) para detalhes.
-
----
-
-**⭐ Se este projeto foi útil, deixe uma estrela no GitHub!**
